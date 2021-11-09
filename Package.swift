@@ -5,7 +5,8 @@ import PackageDescription
 
 let package = Package(
     name: "AsyncBackports",
-    platforms: [        
+    platforms: [
+        // TODO: Xcode 13.2 set targets where backport available
         .macOS(.v12),
         .iOS(.v15),
         .watchOS(.v8),
