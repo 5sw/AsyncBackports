@@ -18,6 +18,7 @@ public extension Backport where Original: URLSession {
         if #available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *) {
             return try await original.data(for: request, delegate: delegate)
         } else {
+            precondition(delegate == nil, "Cannot set delegate")
             return try await withUnsafeThrowingContinuation { continuation in
                 let task = URLSession.shared.dataTask(with: request) { data, response, error in
                     if let data = data, let response = response {
@@ -28,7 +29,6 @@ public extension Backport where Original: URLSession {
                         fatalError("Neither response nor error")
                     }
                 }
-                task.delegate = delegate
                 task.resume()
             }
         }
